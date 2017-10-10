@@ -1,14 +1,13 @@
 package ru.eninja.testwork.persons.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -16,17 +15,21 @@ import java.time.LocalDateTime;
 public class Passport extends BaseEntity {
 
     @ManyToOne
-    @JsonIgnore
     private Person person;
 
     @CreatedDate
-    private LocalDateTime issueDateTime;
+    private LocalDate issueDate;
 
+    @OneToOne
     private Passport prevPassport;
 
     private String firstName;
+
     private String lastName;
+
     private LocalDate birthday;
+
+    private boolean valid = true;
 
     public Passport(Person person, String firstName, String lastName, LocalDate birthday) {
         this.person = person;
@@ -41,5 +44,9 @@ public class Passport extends BaseEntity {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthday = birthday;
+    }
+
+    public void invalidate() {
+        valid = false;
     }
 }

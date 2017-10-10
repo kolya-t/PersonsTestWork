@@ -1,5 +1,6 @@
 package ru.eninja.testwork.persons.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import java.util.Set;
 @NoArgsConstructor
 public class Person extends BaseEntity {
 
+    @JsonIgnore
     @OneToMany(mappedBy = "person")
     private Set<Passport> passports = new HashSet<>();
 }
